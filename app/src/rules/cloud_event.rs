@@ -1,12 +1,14 @@
+use std::any::type_name;
+
 use anyhow::Result;
 use cloudevents::{EventBuilder, EventBuilderV10};
 use k8s_openapi::api::core::v1::Event;
 use k8s_openapi::chrono::{DateTime, Utc};
 use kube::api::Meta;
-use std::any::type_name;
+
+use kubevent_common::crd::RuleSpec;
 
 use crate::rules::{create_cloud_event_data, RuleTrait};
-use kubevent_common::crd::RuleSpec;
 
 #[derive(Debug)]
 pub struct CloudEventRule;

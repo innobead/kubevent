@@ -3,6 +3,7 @@
 use anyhow::Result;
 use cloudevents::event::Data;
 use k8s_openapi::api::core::v1::Event;
+
 use kubevent_common::crd::RuleSpec;
 
 pub mod cloud_event;
