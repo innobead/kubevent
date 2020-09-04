@@ -75,7 +75,7 @@ spec:
 
 ## Demos
 
-[![asciicast](https://asciinema.org/a/wqQbriK25hR0yCmXxrNTXavDo.svg)](https://asciinema.org/a/wqQbriK25hR0yCmXxrNTXavDo)
+[![asciicast](https://asciinema.org/a/8VZllAkQjcXPYHbD3oJZcdcfX.svg)](https://asciinema.org/a/8VZllAkQjcXPYHbD3oJZcdcfX)
 
 # References
 - https://cloudevents.io/
