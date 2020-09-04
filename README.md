@@ -12,15 +12,16 @@
 
 There will be a CLI to support `kubevent` installation and management, but it's under development. For now, please build and try directly by using below commands.
 
-### Starting kubeventd
-```console
-make release
-./target/release/kubeventd
-```
 
 ### Applying CRDs (at least K8s 1.18)
 ```console
 kubectl apply -f ./manifests/generated
+```
+
+### Starting kubeventd
+```console
+make release
+./target/release/kubeventd
 ```
 
 ### Applying sample configurations
