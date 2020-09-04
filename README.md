@@ -5,7 +5,7 @@
 **Kubevent**, a K8s event telemetry solution to filter, convert and transfer CloudEvents compatible K8s events to external supported event brokers.
 
 - Monitors interested K8s events to convert to CloudEvents events.
-- Supports rule configurations to support different type of event filtering and enrichment.
+- Supports rule configurations for different type of event filtering and enrichment.
 - Supports to transfer transformed CloudEvents events to external event brokers.
 
 ## Getting Started
