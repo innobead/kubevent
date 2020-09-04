@@ -18,7 +18,7 @@ make release
 ./target/release/kubeventd
 ```
 
-### Applying CRDs
+### Applying CRDs (at least K8s 1.18)
 ```console
 kubectl apply -f ./manifests/generated
 ```
