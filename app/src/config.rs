@@ -1,5 +1,6 @@
-use env_logger::WriteStyle;
 use std::path::PathBuf;
+
+use env_logger::WriteStyle;
 
 pub trait ConfigTrait {
     fn init(&self);

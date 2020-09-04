@@ -27,6 +27,7 @@ fn main() {
         .parent()
         .unwrap()
         .join("manifests")
+        .join("generated")
         .join("crd.yaml");
 
     #[allow(unused_must_use)]

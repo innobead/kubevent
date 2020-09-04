@@ -1,0 +1,25 @@
+---
+apiVersion: kubevent.io/v1alpha1
+kind: Rule
+metadata:
+  name: demo
+spec:
+  kind: "type"
+  types: [ "Warning" ]
+
+---
+apiVersion: kubevent.io/v1alpha1
+kind: Broker
+metadata:
+  name: demo
+spec:
+  kind: "console"
+
+---
+apiVersion: kubevent.io/v1alpha1
+kind: RuleBinding
+metadata:
+  name: demo
+spec:
+  rule: "demo"
+  brokers: [ "demo" ]

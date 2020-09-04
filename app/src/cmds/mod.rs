@@ -1,4 +1,4 @@
-#![allow(dead_code)] // avoid incorrect warnning about dead_code
+#![allow(dead_code)] // avoid incorrect warning about dead_code
 
 pub mod broker;
 pub mod install;

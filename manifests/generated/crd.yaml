@@ -1,9 +1,10 @@
 ---
-apiVersion: apiextensions.k8s.io/v1
+apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
   name: brokers.kubevent.io
 spec:
+  additionalPrinterColumns: []
   group: kubevent.io
   names:
     kind: Broker
@@ -11,16 +12,18 @@ spec:
     shortNames: []
     singular: broker
   scope: Cluster
+  subresources: {}
   versions:
     - name: v1alpha1
       served: true
       storage: true
 ---
-apiVersion: apiextensions.k8s.io/v1
+apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
   name: rules.kubevent.io
 spec:
+  additionalPrinterColumns: []
   group: kubevent.io
   names:
     kind: Rule
@@ -28,16 +31,18 @@ spec:
     shortNames: []
     singular: rule
   scope: Cluster
+  subresources: {}
   versions:
     - name: v1alpha1
       served: true
       storage: true
 ---
-apiVersion: apiextensions.k8s.io/v1
+apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
   name: rulebindings.kubevent.io
 spec:
+  additionalPrinterColumns: []
   group: kubevent.io
   names:
     kind: RuleBinding
@@ -45,6 +50,7 @@ spec:
     shortNames: []
     singular: rulebinding
   scope: Cluster
+  subresources: {}
   versions:
     - name: v1alpha1
       served: true

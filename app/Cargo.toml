@@ -17,6 +17,12 @@ serde_json = "~1.0.53"
 serde_yaml = "~0.8.13"
 dirs = "~1.0.5"
 env_logger = "~0.7.1"
+tokio = { version = "~0.2.22", features = ["rt-core", "rt-threaded", "stream", "macros", "sync", "time"] }
+snafu = "~0.1.4"
+futures = "~0.3.5"
+anyhow = "~1.0.32"
+cloudevents-sdk = "~0.2.0"
+cloudevents-sdk-rdkafka = "~0.2.0"
 
 [build-dependencies]
 kubevent-common = { path = "./../common", version = "0.1.0" }

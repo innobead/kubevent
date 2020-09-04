@@ -2,33 +2,33 @@ use kube_derive::CustomResource;
 use serde::{Deserialize, Serialize};
 
 #[derive(CustomResource, Serialize, Deserialize, PartialEq, Default, Clone, Debug)]
-#[kube(group = "kubevent.io", version = "v1alpha1")]
+#[kube(apiextensions = "v1beta1", group = "kubevent.io", version = "v1alpha1")]
 pub struct RuleSpec {
     // ref: kubectl explain events, extensible middlewares implementing other filters
-    name: String,
-    types: Vec<String>,
-    count: i32,
-    involved_objects: Vec<String>,
-    related_objects: Vec<String>,
-    message_regex: String,
-    reason_regex: String,
-    sources: Vec<String>,
+    pub kind: String,
+    pub types: Option<Vec<String>>,
+    // pub count: Option<i32>,
+    // pub involved_objects: Option<Vec<String>>,
+    // pub related_objects: Option<Vec<String>>,
+    // pub message_regex: Option<String>,
+    // pub reason_regex: Option<String>,
+    // pub sources: Option<Vec<String>>,
 }
 
 #[derive(CustomResource, Serialize, Deserialize, Default, Clone, Debug)]
-#[kube(group = "kubevent.io", version = "v1alpha1")]
+#[kube(apiextensions = "v1beta1", group = "kubevent.io", version = "v1alpha1")]
 pub struct BrokerSpec {
-    name: String,
-    uri: String,
-    user: String,
-    password: String,
-    token: String,
+    pub kind: String,
+    pub uri: Option<String>,
+    pub user: Option<String>,
+    pub password: Option<String>,
+    pub token: Option<String>,
+    pub ca: Option<String>,
 }
 
 #[derive(CustomResource, Serialize, Deserialize, Clone, Debug)]
-#[kube(group = "kubevent.io", version = "v1alpha1")]
+#[kube(apiextensions = "v1beta1", group = "kubevent.io", version = "v1alpha1")]
 pub struct RuleBindingSpec {
-    name: String,
-    rules: Vec<String>,
-    broker: Broker,
+    pub rule: String,
+    pub brokers: Vec<String>,
 }

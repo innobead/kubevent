@@ -1,8 +1,9 @@
+use clap::{crate_name, crate_version, App, Arg, ArgMatches};
+
+use config::ConfigTrait;
+
 mod cmds;
 mod config;
-
-use clap::{crate_name, crate_version, App, Arg, ArgMatches};
-use config::ConfigTrait;
 
 const ARG_LOG_LEVEL: &str = "log-level";
 const ARG_NO_LOG_COLOR: &str = "no-log-color";
