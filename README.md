@@ -10,7 +10,7 @@
 
 ## Getting Started
 
-There will be a CLI to support `kubevent` installation, and it's under development. For now, please build and try directly by using below commands.
+There will be a CLI to support `kubevent` installation and management, but it's under development. For now, please build and try directly by using below commands.
 
 ### Starting kubeventd
 ```console
