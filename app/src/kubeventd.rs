@@ -1,14 +1,16 @@
 use std::collections::HashMap;
 use std::sync::Arc;
 
+use actix_web::{web, App, HttpServer};
+use actix_web_prom::PrometheusMetrics;
 use anyhow::Result;
 use tokio::sync::Mutex;
 
-use config::ConfigTrait;
 use kubevent_common::crd;
 
 use crate::brokers::console::ConsoleBroker;
 use crate::brokers::BrokerTrait;
+use crate::config::{ConfigTrait, KubeventDConfig};
 use crate::controllers::resource::{ResourceController, ResourceProcessor};
 use crate::rules::type_::TypeRule;
 use crate::rules::RuleTrait;
@@ -20,10 +22,6 @@ mod controllers;
 mod rules;
 mod server;
 mod watchers;
-
-use crate::config::KubeventDConfig;
-use actix_web::{web, App, HttpServer};
-use actix_web_prom::PrometheusMetrics;
 
 #[tokio::main]
 async fn main() {
