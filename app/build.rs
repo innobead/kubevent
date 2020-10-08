@@ -10,7 +10,7 @@ fn main() {
     let resources = vec![
         crd::Broker::crd(),
         crd::Rule::crd(),
-        crd::RuleBinding::crd(),
+        crd::RuleBrokersBinding::crd(),
     ];
 
     let mut crd_strings = String::new();

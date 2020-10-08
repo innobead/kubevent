@@ -1,5 +1,3 @@
-#![allow(dead_code)] // avoid incorrect warning about dead_code
-
 use core::fmt::Debug;
 
 use kube::api::Meta;

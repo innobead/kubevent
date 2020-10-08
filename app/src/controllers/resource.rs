@@ -64,12 +64,8 @@ impl ResourceController {
                 }),
             )
             .for_each(|res| async {
-                match res {
-                    Err(err) => {
-                        log::error!("failed to reconcile resource: {:?}", err);
-                    }
-
-                    _ => {}
+                if let Err(err) = res {
+                    log::error!("failed to reconcile resource: {:?}", err);
                 }
             })
             .await;
@@ -117,11 +113,11 @@ impl ResourceProcessor {
         }
 
         // rule binding
-        if TypeId::of::<crd::RuleBinding>() == res.type_id() {
-            if let Some(value) = res.downcast_ref::<crd::RuleBinding>() {
+        if TypeId::of::<crd::RuleBrokersBinding>() == res.type_id() {
+            if let Some(value) = res.downcast_ref::<crd::RuleBrokersBinding>() {
                 log::info!("processing resource: {}", value.description());
 
-                let rule_binding_spec = &value.spec as &crd::RuleBindingSpec;
+                let rule_binding_spec = &value.spec as &crd::RuleBrokersBindingSpec;
 
                 if !self.rules.contains_key(rule_binding_spec.rule.as_str()) {
                     return Err(anyhow::Error::msg(format!(
@@ -171,7 +167,7 @@ where
 
     let mut processor = processor.lock().await;
 
-    return match processor.process(&resource) {
+    match processor.process(&resource) {
         Ok(_) => Ok(ReconcilerAction {
             requeue_after: None,
         }),
@@ -183,7 +179,7 @@ where
                 requeue_after: Some(Duration::from_secs(1)),
             })
         }
-    };
+    }
 }
 
 fn error_policy<E>(_: &E, _ctx: Context<ReconcileData>) -> ReconcilerAction

@@ -81,17 +81,17 @@ fn process_args(matches: &ArgMatches) -> config::Config {
 
 fn process_cmds(app: &mut App, _config: &config::Config, matches: &ArgMatches) {
     match matches.subcommand() {
-        // Some((cmds::install::CMD_NAME, _subcommand_matches)) => unimplemented!(),
-        //
-        // Some((cmds::uninstall::CMD_NAME, _subcommand_matches)) => unimplemented!(),
-        //
-        // Some((cmds::broker::CMD_NAME, _subcommand_matches)) => unimplemented!(),
-        //
-        // Some((cmds::rule::CMD_NAME, _subcommand_matches)) => unimplemented!(),
-        //
-        // Some((cmds::rule_binding::CMD_NAME, _subcommand_matches)) => unimplemented!(),
-        //
-        // Some((cmds::status::CMD_NAME, _subcommand_matches)) => unimplemented!(),
+        Some((cmds::install::CMD_NAME, _subcommand_matches)) => unimplemented!(),
+
+        Some((cmds::uninstall::CMD_NAME, _subcommand_matches)) => unimplemented!(),
+
+        Some((cmds::broker::CMD_NAME, _subcommand_matches)) => unimplemented!(),
+
+        Some((cmds::rule::CMD_NAME, _subcommand_matches)) => unimplemented!(),
+
+        Some((cmds::rule_binding::CMD_NAME, _subcommand_matches)) => unimplemented!(),
+
+        Some((cmds::status::CMD_NAME, _subcommand_matches)) => unimplemented!(),
         _ => {
             let _ = app.print_help();
         }

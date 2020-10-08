@@ -2,7 +2,7 @@ use kube_derive::CustomResource;
 use serde::{Deserialize, Serialize};
 
 #[derive(CustomResource, Serialize, Deserialize, PartialEq, Default, Clone, Debug)]
-#[kube(apiextensions = "v1beta1", group = "kubevent.io", version = "v1alpha1")]
+#[kube(group = "kubevent.io", version = "v1alpha1")]
 pub struct RuleSpec {
     // ref: kubectl explain events, extensible middlewares implementing other filters
     pub kind: String,
@@ -16,7 +16,7 @@ pub struct RuleSpec {
 }
 
 #[derive(CustomResource, Serialize, Deserialize, Default, Clone, Debug)]
-#[kube(apiextensions = "v1beta1", group = "kubevent.io", version = "v1alpha1")]
+#[kube(group = "kubevent.io", version = "v1alpha1")]
 pub struct BrokerSpec {
     pub kind: String,
     pub uri: Option<String>,
@@ -27,8 +27,8 @@ pub struct BrokerSpec {
 }
 
 #[derive(CustomResource, Serialize, Deserialize, Clone, Debug)]
-#[kube(apiextensions = "v1beta1", group = "kubevent.io", version = "v1alpha1")]
-pub struct RuleBindingSpec {
+#[kube(group = "kubevent.io", version = "v1alpha1")]
+pub struct RuleBrokersBindingSpec {
     pub rule: String,
     pub brokers: Vec<String>,
 }

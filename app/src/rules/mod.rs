@@ -1,5 +1,3 @@
-#![allow(dead_code)] // avoid incorrect warning about dead_code
-
 use anyhow::Result;
 use cloudevents::event::Data;
 use k8s_openapi::api::core::v1::Event;

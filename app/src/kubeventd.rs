@@ -20,16 +20,20 @@ mod controllers;
 mod rules;
 mod watchers;
 
+use crate::config::KubeventDConfig;
+use actix_web::{web, App, HttpServer};
+use actix_web_prom::PrometheusMetrics;
+
 #[tokio::main]
 async fn main() {
-    init();
+    let config = init();
 
     let resource_processor = Arc::new(Mutex::new(ResourceProcessor::new()));
 
     let (result_start_metrics_server, result_start_event_watcher, result_start_controllers) = tokio::join!(
-        start_metrics_server(),
-        start_event_watcher(&resource_processor),
-        start_controllers(&resource_processor),
+        start_metrics_server(&config),
+        start_event_watcher(&config, &resource_processor),
+        start_controllers(&config, &resource_processor),
     );
 
     if let Err(err) = result_start_metrics_server {
@@ -45,15 +49,42 @@ async fn main() {
     }
 }
 
-fn init() {
-    config::Config::default().init();
+fn init() -> KubeventDConfig {
+    let config = config::KubeventDConfig::default();
+    config.init();
+
+    config
 }
 
-async fn start_metrics_server() -> Result<()> {
-    Ok(())
+async fn start_metrics_server(config: &config::KubeventDConfig) -> futures::io::Result<()> {
+    let local = tokio::task::LocalSet::new();
+    let system = actix_rt::System::run_in_tokio("server", &local);
+    let prometheus = PrometheusMetrics::new("api", Some("/metrics"), None);
+
+    HttpServer::new(move || {
+        App::new()
+            .wrap(prometheus.clone())
+            .service(web::resource("/healthz").to(http::health))
+    })
+    .bind(config.addr)?
+    .run()
+    .await?;
+
+    system.await
 }
 
-async fn start_event_watcher(resource_processor: &Arc<Mutex<ResourceProcessor>>) -> Result<()> {
+mod http {
+    use actix_web::HttpResponse;
+
+    pub fn health() -> HttpResponse {
+        HttpResponse::Ok().finish()
+    }
+}
+
+async fn start_event_watcher(
+    config: &config::KubeventDConfig,
+    resource_processor: &Arc<Mutex<ResourceProcessor>>,
+) -> Result<()> {
     log::info!("starting event watcher");
 
     let mut brokers = HashMap::<InstanceName, Box<dyn BrokerTrait>>::new();
@@ -67,7 +98,10 @@ async fn start_event_watcher(resource_processor: &Arc<Mutex<ResourceProcessor>>)
         .await
 }
 
-async fn start_controllers(resource_processor: &Arc<Mutex<ResourceProcessor>>) -> Result<()> {
+async fn start_controllers(
+    config: &config::KubeventDConfig,
+    resource_processor: &Arc<Mutex<ResourceProcessor>>,
+) -> Result<()> {
     log::info!("starting controllers");
 
     let controller = ResourceController::new();
@@ -75,7 +109,8 @@ async fn start_controllers(resource_processor: &Arc<Mutex<ResourceProcessor>>) -
     let (_, _, _) = tokio::join!(
         controller.start::<crd::Rule>("rule", resource_processor.clone()),
         controller.start::<crd::Broker>("broker", resource_processor.clone()),
-        controller.start::<crd::RuleBinding>("rule-binding", resource_processor.clone()),
+        controller
+            .start::<crd::RuleBrokersBinding>("rule-brokers-binding", resource_processor.clone()),
     );
 
     Ok(())

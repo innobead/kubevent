@@ -4,6 +4,7 @@ use env_logger::WriteStyle;
 
 pub trait ConfigTrait {
     fn init(&self);
+    fn default() -> Self;
 }
 
 pub struct Config {
@@ -14,16 +15,7 @@ pub struct Config {
 
 pub struct KubeventDConfig {
     base: Config,
-}
-
-impl Config {
-    pub fn default() -> Self {
-        Config {
-            kube_config: dirs::home_dir().unwrap().join(".kube").join("config"),
-            log_level: log::Level::Info,
-            log_color: true,
-        }
-    }
+    pub addr: &'static str,
 }
 
 impl ConfigTrait for Config {
@@ -35,12 +27,27 @@ impl ConfigTrait for Config {
                 WriteStyle::Never
             })
             .filter_level(self.log_level.to_level_filter())
-            .init();
+            .init()
+    }
+
+    fn default() -> Self {
+        Self {
+            kube_config: dirs::home_dir().unwrap().join(".kube").join("config"),
+            log_level: log::Level::Info,
+            log_color: true,
+        }
     }
 }
 
 impl ConfigTrait for KubeventDConfig {
     fn init(&self) {
         self.base.init()
+    }
+
+    fn default() -> Self {
+        Self {
+            base: Config::default(),
+            addr: "localhost:8899",
+        }
     }
 }

@@ -52,10 +52,10 @@ spec:
   kind: "console"
 ```
 
-### RuleBinding
+### RuleBrokersBinding
 ```
 apiVersion: kubevent.io/v1alpha1
-kind: RuleBinding
+kind: RuleBrokersBinding
 metadata:
   name: demo
 spec:
