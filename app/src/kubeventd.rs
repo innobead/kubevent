@@ -18,6 +18,7 @@ mod brokers;
 mod config;
 mod controllers;
 mod rules;
+mod server;
 mod watchers;
 
 use crate::config::KubeventDConfig;
@@ -64,21 +65,13 @@ async fn start_metrics_server(config: &config::KubeventDConfig) -> futures::io::
     HttpServer::new(move || {
         App::new()
             .wrap(prometheus.clone())
-            .service(web::resource("/healthz").to(http::health))
+            .service(web::resource("/healthz").to(server::http::health))
     })
     .bind(config.addr)?
     .run()
     .await?;
 
     system.await
-}
-
-mod http {
-    use actix_web::HttpResponse;
-
-    pub fn health() -> HttpResponse {
-        HttpResponse::Ok().finish()
-    }
 }
 
 async fn start_event_watcher(
