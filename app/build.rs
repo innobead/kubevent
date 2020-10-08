@@ -17,31 +17,30 @@ fn main() {
     for resource in resources {
         let crd_str = match serde_yaml::to_string(&resource) {
             Ok(s) => s,
-            _ => panic!(),
+            _ => panic!(format!("failed to serialize CRD {:#?} to string", resource)),
         };
 
-        crd_strings.push_str(format!("{}\n", crd_str.as_str()).as_str())
+        crd_strings.push_str(&format!("{}\n", crd_str))
     }
 
-    let path = &Path::new(env::var("CARGO_MANIFEST_DIR").unwrap().as_str())
+    let generated_dir_path = Path::new(env::var("CARGO_MANIFEST_DIR").unwrap().as_str())
         .parent()
         .unwrap()
         .join("manifests")
-        .join("generated")
-        .join("crd.yaml");
+        .join("generated");
+
+    let crd_path = generated_dir_path.join("crd.yaml");
 
     #[allow(unused_must_use)]
     {
-        if let Some(p) = path.parent().unwrap().to_str() {
-            println!("Saving the generated CRD into {}", p);
+        println!("Saving the generated CRD into {:?}", generated_dir_path);
 
-            remove_dir_all(p);
-            create_dir_all(p);
-        }
+        remove_dir_all(&generated_dir_path);
+        create_dir_all(&generated_dir_path);
 
-        match File::create(path) {
+        match File::create(crd_path) {
             Ok(mut f) => f.write_all(crd_strings.as_bytes()),
-            _ => panic!(),
+            _ => panic!("failed to create CRD manifests"),
         };
     }
 }

@@ -6,29 +6,30 @@ edition = "2018"
 
 [dependencies]
 kubevent-common = { path = "./../common", version = "0.1.0" }
-clap = "~3.0.0-beta.1"
-log = "~0.4.11"
-kube = { version = "~0.40.0", features = ["derive"] }
-kube-runtime = "~0.40.0"
-kube-derive = "~0.40.0"
-k8s-openapi = { version = "~0.9.0", default-features = false, features = ["v1_18"] }
-serde = { version = "~1.0.111", features = ["derive"] }
-serde_json = "~1.0.53"
-serde_yaml = "~0.8.13"
-dirs = "~1.0.5"
-env_logger = "~0.7.1"
-tokio = { version = "~0.2.22", features = ["rt-core", "rt-threaded", "stream", "macros", "sync", "time"] }
-snafu = "~0.1.4"
-futures = "~0.3.5"
-anyhow = "~1.0.32"
-cloudevents-sdk = "~0.2.0"
-cloudevents-sdk-rdkafka = "~0.2.0"
+clap = "~3.0.0-beta"
+log = "~0.4"
+kube = { version = "~0", features = ["derive"] }
+kube-runtime = "~0"
+kube-derive = "~0"
+k8s-openapi = { version = "~0.9", default-features = false, features = ["v1_18"] }
+serde = { version = "~1.0", features = ["derive"] }
+serde_json = "~1.0"
+serde_yaml = "~0.8"
+dirs = "~1.0"
+env_logger = "~0.7"
+tokio = { version = "~0.2", features = ["rt-core", "rt-threaded", "stream", "macros", "sync", "time"] }
+snafu = "~0.1"
+futures = "~0.3"
+anyhow = "~1.0"
+cloudevents-sdk = "~0.2"
+cloudevents-sdk-rdkafka = "~0.2"
 
 [build-dependencies]
 kubevent-common = { path = "./../common", version = "0.1.0" }
-serde = { version = "~1.0.111", features = ["derive"] }
-serde_json = "~1.0.53"
-serde_yaml = "~0.8.13"
+serde = { version = "~1.0", features = ["derive"] }
+serde_json = "~1.0"
+serde_yaml = "~0.8"
+anyhow = "~1.0"
 
 [[bin]]
 name = "kubevent"
@@ -37,4 +38,3 @@ path = "src/kubevent.rs"
 [[bin]]
 name = "kubeventd"
 path = "src/kubeventd.rs"
-

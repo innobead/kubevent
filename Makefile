@@ -14,7 +14,7 @@ build: fmt ## Build binaries
 fmt:## Format & Lint codes
 	rustup component add rustfmt clippy
 	cargo fmt
-	#cargo clippy
+	cargo clippy
 
 release: ## Release binaries
 	CARGO_OPTS="--release" $(MAKE) build
